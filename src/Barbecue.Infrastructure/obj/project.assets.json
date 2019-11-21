@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.Infrastructure/Barbecue.Infrastructure.csproj",
+      "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.Infrastructure/Barbecue.Infrastructure.csproj",
       "projectName": "Barbecue.Infrastructure",
-      "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.Infrastructure/Barbecue.Infrastructure.csproj",
+      "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.Infrastructure/Barbecue.Infrastructure.csproj",
       "packagesPath": "/home/oem/.nuget/packages/",
-      "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.Infrastructure/obj/",
+      "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/oem/.nuget/NuGet/NuGet.Config"

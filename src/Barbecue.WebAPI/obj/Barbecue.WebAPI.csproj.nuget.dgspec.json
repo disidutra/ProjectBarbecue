@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.WebAPI/Barbecue.WebAPI.csproj": {}
+    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.WebAPI/Barbecue.WebAPI.csproj": {}
   },
   "projects": {
-    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.WebAPI/Barbecue.WebAPI.csproj": {
+    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.WebAPI/Barbecue.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.WebAPI/Barbecue.WebAPI.csproj",
+        "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.WebAPI/Barbecue.WebAPI.csproj",
         "projectName": "Barbecue.WebAPI",
-        "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.WebAPI/Barbecue.WebAPI.csproj",
+        "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.WebAPI/Barbecue.WebAPI.csproj",
         "packagesPath": "/home/oem/.nuget/packages/",
-        "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.WebAPI/obj/",
+        "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.WebAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/oem/.nuget/NuGet/NuGet.Config"

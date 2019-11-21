@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj": {}
+    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj": {}
   },
   "projects": {
-    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj": {
+    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj",
+        "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj",
         "projectName": "Barbecue.ApplicationCore",
-        "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj",
+        "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj",
         "packagesPath": "/home/oem/.nuget/packages/",
-        "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/Barbecue.ApplicationCore/obj/",
+        "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/oem/.nuget/NuGet/NuGet.Config"
