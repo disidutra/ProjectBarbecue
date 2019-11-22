@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Barbecue.WebAPI.Controllers
 {
@@ -12,9 +14,12 @@ namespace Barbecue.WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly IEfBaseRepository<User> _context;
-        public UserController(IEfBaseRepository<User> context)
+        private const string LocalLog = "[WebAPI][UserController]";
+        public UserController(ILogger<UserController> logger, IEfBaseRepository<User> context)
         {
+            _logger = logger;
             _context = context;
         }
 
@@ -32,6 +37,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"{LocalLog}[Get]");
                 throw ex;
             }
 
@@ -51,6 +57,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"{LocalLog}[GetAll]");
                 throw ex;
             }
 
@@ -66,7 +73,8 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                throw ex;                
             }
         }
 
@@ -85,6 +93,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
                 throw ex;
             }
         }
@@ -105,6 +114,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"{LocalLog} [Delete] [Id: {id}]");
                 throw ex;
             }
 
