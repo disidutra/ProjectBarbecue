@@ -4,6 +4,56 @@
     "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.Infrastructure/Barbecue.Infrastructure.csproj": {}
   },
   "projects": {
+    "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj",
+        "projectName": "Barbecue.ApplicationCore",
+        "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj",
+        "packagesPath": "/home/oem/.nuget/packages/",
+        "outputPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/oem/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.Infrastructure/Barbecue.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -17,14 +67,18 @@
           "/home/oem/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netstandard2.0"
+          "netstandard2.1"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netstandard2.0": {
-            "projectReferences": {}
+          "netstandard2.1": {
+            "projectReferences": {
+              "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj": {
+                "projectPath": "/home/oem/Dev/dotnet/Tests/ProjectBarbecue/src/Barbecue.ApplicationCore/Barbecue.ApplicationCore.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -34,13 +88,23 @@
         }
       },
       "frameworks": {
-        "netstandard2.0": {
+        "netstandard2.1": {
           "dependencies": {
-            "NETStandard.Library": {
-              "suppressParent": "All",
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite.Design": {
+              "target": "Package",
+              "version": "[1.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[3.0.0, )"
             }
           },
           "imports": [
@@ -53,6 +117,11 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
         }
       }

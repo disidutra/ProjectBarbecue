@@ -1,7 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <OutputPath>..\Barbecue.WebAPI\bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Barbecue.ApplicationCore\Barbecue.ApplicationCore.csproj"/>
+  </ItemGroup>
 </Project>
