@@ -4,14 +4,16 @@ using Barbecue.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Barbecue.Infrastructure.Migrations
 {
     [DbContext(typeof(EfBaseContext))]
-    partial class EfBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191126021504_EventUSer")]
+    partial class EventUSer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
