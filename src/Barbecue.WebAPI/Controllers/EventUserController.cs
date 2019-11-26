@@ -47,6 +47,26 @@ namespace Barbecue.WebAPI.Controllers
 
         }
 
+        [HttpGet("EventId/{id}")]
+        public async Task<ActionResult<IEnumerable<EventUser>>> GetAllByEventId(int id)
+        {
+            try
+            {
+                var result = await _context.GetAllWhere(x => x.EventId == id);
+                if (result != null)
+                {
+                    return result.ToList();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[Get]");
+                throw ex;
+            }
+
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]EventUser item)
         {
