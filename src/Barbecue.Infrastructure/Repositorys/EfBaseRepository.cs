@@ -50,7 +50,7 @@ namespace Barbecue.Infrastructure.Repositorys
 
         public IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null)
         {
-            var entities = _base_context.Set<TEntity>();
+            var entities = _base_context.Set<TEntity>().AsNoTracking();
 
             var query = includeExpressions is null
                 ? entities
