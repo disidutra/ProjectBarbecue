@@ -45,7 +45,7 @@ namespace Barbecue.Infrastructure.Repositorys
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _base_context.Set<TEntity>().ToListAsync();
+            return await _base_context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
         public IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null)
