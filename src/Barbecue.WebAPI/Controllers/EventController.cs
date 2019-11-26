@@ -84,12 +84,12 @@ namespace Barbecue.WebAPI.Controllers
             }
         }
 
-        [HttpPost, Route("EventAndUsers")]
-        public async Task<ActionResult> PostEventAndUsers([FromBody]Event item)
+        [HttpPost, Route("Users")]
+        public async Task<ActionResult> PostEventAndUsers(int id, [FromBody]IEnumerable<EventUser> item)
         {
             try
             {
-                await _service.AddEventAndUsers(item);
+                await _service.AddEventAndUsers(id, item);
                 return Ok();
             }
             catch (Exception ex)
