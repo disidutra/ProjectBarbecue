@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Entities;
+using Barbecue.ApplicationCore.Interfaces.Repositorys;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -15,9 +16,9 @@ namespace Barbecue.WebAPI.Controllers
     public class EventController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEfBaseRepository<Event> _context;
+        private readonly IEventRepository _context;
         private const string LocalLog = "[WebAPI][EventController]";
-        public EventController(ILogger<EventController> logger, IEfBaseRepository<Event> context)
+        public EventController(ILogger<EventController> logger, IEventRepository context)
         {
             _logger = logger;
             _context = context;
