@@ -20,10 +20,19 @@ namespace Barbecue.ApplicationCore.Services
             _eventUserRepository = eventUSerRepository;
         }
         public async Task AddEventAndUsers(int eventId, IEnumerable<EventUser> entity)
-        {            
-            entity.ToList().ForEach(item => item.EventId = eventId);            
+        {
+            entity.ToList().ForEach(item => item.EventId = eventId);
             await _eventUserRepository.AddRange(entity);
         }
 
+        public async Task AddOrUpdateEventAndUsers(int eventId, IEnumerable<EventUser> entity)
+        {
+            var eventUsers = await _eventUserRepository.GetAllWhere(x => x.EventId == eventId);                
+            
+            
+            entity.ToList().ForEach(item => item.EventId = eventId);
+            await _eventUserRepository.AddRange(entity);
+
+        }
     }
 }

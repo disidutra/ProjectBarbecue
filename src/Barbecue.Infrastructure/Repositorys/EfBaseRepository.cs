@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.Infrastructure.Data;
@@ -50,7 +51,7 @@ namespace Barbecue.Infrastructure.Repositorys
             return await _base_context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null)
+        public async Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null)
         {
             var entities = _base_context.Set<TEntity>().AsNoTracking();
 
@@ -58,7 +59,14 @@ namespace Barbecue.Infrastructure.Repositorys
                 ? entities
                 : includeExpressions(entities);
 
-            return query.ToList();
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllWhere(Expression<Func<TEntity, bool>> Predicate)
+        {
+            var query = await _base_context.Set<TEntity>().AsNoTracking()
+                .Where(Predicate).ToListAsync();
+            return query;
         }
 
         public async Task Update(TEntity entity)

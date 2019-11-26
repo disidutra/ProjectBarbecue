@@ -13,7 +13,8 @@ namespace ApplicationCore.Interfaces.Repositorys
         Task<TEntity> GetById(int id);        
         Task<TEntity> GetByIdCompositeKey(object[] keyValues);
         Task<IEnumerable<TEntity>> GetAll();
-        IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);
+        Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);
+        Task<IEnumerable<TEntity>> GetAllWhere(Expression<Func<TEntity, bool>> Predicate);
         Task Update(TEntity entity);
         Task Remove(TEntity entity);
         Task RemoveRange(IEnumerable<TEntity> entity);
