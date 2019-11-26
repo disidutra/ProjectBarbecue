@@ -27,11 +27,24 @@ namespace Barbecue.ApplicationCore.Services
 
         public async Task AddOrUpdateEventAndUsers(int eventId, IEnumerable<EventUser> entity)
         {
+            var eventUsersAdd = entity.ToList();
+            var eventUsersRemove = new List<EventUser>();
+            var eventUsersUpdate = new List<EventUser>();
+
             var eventUsers = await _eventUserRepository.GetAllWhere(x => x.EventId == eventId);                
-            
-            
-            entity.ToList().ForEach(item => item.EventId = eventId);
-            await _eventUserRepository.AddRange(entity);
+
+            eventUsers.ToList().ForEach(item => {
+                var resultItem = eventUsersAdd.Where(x=> x.UserId == item.UserId).FirstOrDefault();
+                if (resultItem != null){
+                    eventUsersUpdate.Add(item);
+                    eventUsersAdd.Remove(resultItem);
+                } else {
+                    eventUsersRemove.Add(item);
+                }
+            });
+
+            // entity.ToList().ForEach(item => item.EventId = eventId);
+            // await _eventUserRepository.AddRange(entity);
 
         }
     }
