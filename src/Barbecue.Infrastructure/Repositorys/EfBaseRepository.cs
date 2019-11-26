@@ -17,21 +17,30 @@ namespace Barbecue.Infrastructure.Repositorys
             _base_context = baseContext;
         }
 
-        public async Task Add(TEntity obj)
+        public async Task Add(TEntity entity)
         {
-            await _base_context.Set<TEntity>().AddAsync(obj);
+            await _base_context.Set<TEntity>().AddAsync(entity);
             await _base_context.SaveChangesAsync();
         }
 
-        public async Task AddRange(IEnumerable<TEntity> obj)
+        public async Task AddRange(IEnumerable<TEntity> entity)
         {
-            await _base_context.Set<TEntity>().AddRangeAsync(obj);
+            await _base_context.Set<TEntity>().AddRangeAsync(entity);
             await _base_context.SaveChangesAsync();
         }
 
         public async Task<TEntity> GetById(int id)
-        {
-            return await _base_context.Set<TEntity>().FindAsync(id);
+        {           
+            var result =  await _base_context.Set<TEntity>().FindAsync(id);
+            _base_context.Entry(result).State = EntityState.Detached;
+            return result;
+        }
+
+        public async Task<TEntity> GetByIdCompositeKey(object[] keyValues)
+        {           
+            var result = await  _base_context.Set<TEntity>().FindAsync(keyValues);
+            _base_context.Entry(result).State = EntityState.Detached;
+            return result;
         }
 
         public async Task<IEnumerable<TEntity>> GetAll()
@@ -50,22 +59,21 @@ namespace Barbecue.Infrastructure.Repositorys
             return query.ToList();
         }
 
-        public async Task Update(TEntity obj)
-        {
-            //await _base_context.Entry(obj).State = EntityState.Modified;
-            _base_context.Set<TEntity>().Update(obj);
+        public async Task Update(TEntity entity)
+        {            
+            _base_context.Entry(entity).State = EntityState.Modified;
             await _base_context.SaveChangesAsync();
         }
 
-        public async Task Remove(TEntity obj)
+        public async Task Remove(TEntity entity)
         {
-            _base_context.Set<TEntity>().Remove(obj);
+            _base_context.Set<TEntity>().Remove(entity);
             await _base_context.SaveChangesAsync();
         }
 
-        public async Task RemoveRange(IEnumerable<TEntity> obj)
+        public async Task RemoveRange(IEnumerable<TEntity> entity)
         {
-            _base_context.Set<TEntity>().RemoveRange(obj);
+            _base_context.Set<TEntity>().RemoveRange(entity);
             await _base_context.SaveChangesAsync();
         }
     }

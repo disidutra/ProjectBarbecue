@@ -11,6 +11,7 @@ namespace ApplicationCore.Interfaces.Repositorys
         Task Add(TEntity obj);
         Task AddRange(IEnumerable<TEntity> obj);
         Task<TEntity> GetById(int id);        
+        Task<TEntity> GetByIdCompositeKey(object[] keyValues);
         Task<IEnumerable<TEntity>> GetAll();
         IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);
         Task Update(TEntity obj);

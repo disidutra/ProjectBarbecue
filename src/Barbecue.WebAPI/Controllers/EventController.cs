@@ -12,19 +12,19 @@ namespace Barbecue.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class EventController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEfBaseRepository<User> _context;
-        private const string LocalLog = "[WebAPI][UserController]";
-        public UserController(ILogger<UserController> logger, IEfBaseRepository<User> context)
+        private readonly IEfBaseRepository<Event> _context;
+        private const string LocalLog = "[WebAPI][EventController]";
+        public EventController(ILogger<EventController> logger, IEfBaseRepository<Event> context)
         {
             _logger = logger;
             _context = context;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<Event>> Get(int id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Event>>> GetAll()
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]User item)
+        public async Task<ActionResult> Post([FromBody]Event item)
         {
             try
             {
@@ -79,13 +79,13 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody]User item)
+        public async Task<ActionResult> Put([FromBody]Event item)
         {
             try
             {
                 var getItem = await _context.GetById(item.Id);
                 if (getItem != null)
-                {                    
+                {
                     await _context.Update(item);
                     return Ok();
                 }
@@ -99,7 +99,7 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> Delete(int id)
+        public async Task<ActionResult<Event>> Delete(int id)
         {
             try
             {

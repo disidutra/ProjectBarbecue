@@ -12,39 +12,39 @@ namespace Barbecue.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class EventUserController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEfBaseRepository<User> _context;
-        private const string LocalLog = "[WebAPI][UserController]";
-        public UserController(ILogger<UserController> logger, IEfBaseRepository<User> context)
+        private readonly IEfBaseRepository<EventUser> _context;
+        private const string LocalLog = "[WebAPI][EventUserController]";
+        public EventUserController(ILogger<EventUserController> logger, IEfBaseRepository<EventUser> context)
         {
             _logger = logger;
             _context = context;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
-        {
-            try
-            {
-                var result = await _context.GetById(id);
-                if (result != null)
-                {
-                    return result;
-                }
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"{LocalLog}[Get]");
-                throw ex;
-            }
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<EventUser>> Get(object obj)
+        // {
+        //     try
+        //     {
+        //         var result = await _context.GetByIdCompositeKey(obj);
+        //         if (result != null)
+        //         {
+        //             return result;
+        //         }
+        //         return NotFound();
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogError(ex, $"{LocalLog}[Get]");
+        //         throw ex;
+        //     }
 
-        }
+        // }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        public async Task<ActionResult<IEnumerable<EventUser>>> GetAll()
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]User item)
+        public async Task<ActionResult> Post([FromBody]EventUser item)
         {
             try
             {
@@ -74,18 +74,19 @@ namespace Barbecue.WebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
-                throw ex;                
+                throw ex;
             }
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody]User item)
+        public async Task<ActionResult> Put([FromBody]EventUser item)
         {
             try
-            {
-                var getItem = await _context.GetById(item.Id);
+            {                
+                var keys = new object[]{ item.EventId, item.UserId };                
+                var getItem = await _context.GetByIdCompositeKey(keys);
                 if (getItem != null)
-                {                    
+                {
                     await _context.Update(item);
                     return Ok();
                 }
@@ -99,7 +100,7 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> Delete(int id)
+        public async Task<ActionResult<EventUser>> Delete(int id)
         {
             try
             {

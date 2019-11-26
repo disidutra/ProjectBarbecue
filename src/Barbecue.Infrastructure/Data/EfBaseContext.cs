@@ -1,4 +1,6 @@
+using System.Reflection;
 using Barbecue.ApplicationCore.Entities;
+using Barbecue.Infra.Data.EntityConfig;
 using Microsoft.EntityFrameworkCore;
 
 namespace Barbecue.Infrastructure.Data
@@ -12,7 +14,8 @@ namespace Barbecue.Infrastructure.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

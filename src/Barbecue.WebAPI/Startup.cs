@@ -34,7 +34,7 @@ namespace Barbecue.WebAPI
 
             services.AddDbContext<EfBaseContext>(options =>
             {
-                options.UseSqlite(Configuration.GetConnectionString("DBConnection"), b => b.MigrationsAssembly("Barbecue.Infrastructure"));
+                options.UseSqlServer(Configuration.GetConnectionString("DBConnection"), b => b.MigrationsAssembly("Barbecue.Infrastructure"));
             });
             
             services.AddControllers();
