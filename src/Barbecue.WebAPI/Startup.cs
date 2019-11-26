@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.Infrastructure.Data;
 using Barbecue.Infrastructure.Repositorys;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Barbecue.ApplicationCore.Interfaces.Repositorys;
+using Barbecue.ApplicationCore.Interfaces.Services;
+using Barbecue.ApplicationCore.Services;
 
 namespace Barbecue.WebAPI
 {
@@ -31,10 +25,8 @@ namespace Barbecue.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IEfBaseRepository<>), typeof(EfBaseRepository<>));
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IEventUserRepository, EventUserRepository>();
+            services.AddScoped(typeof(IEfBaseRepository<>), typeof(EfBaseRepository<>));            
+            services.AddScoped<IEventService, EventService>();
 
 
             services.AddDbContext<EfBaseContext>(options =>

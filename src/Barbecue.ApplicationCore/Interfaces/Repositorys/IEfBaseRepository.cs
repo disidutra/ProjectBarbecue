@@ -8,15 +8,15 @@ namespace ApplicationCore.Interfaces.Repositorys
 {
     public interface IEfBaseRepository<TEntity> where TEntity : class
     {
-        Task Add(TEntity obj);
-        Task AddRange(IEnumerable<TEntity> obj);
+        Task<TEntity> Add(TEntity entity);
+        Task<IEnumerable<TEntity>> AddRange(IEnumerable<TEntity> entity);
         Task<TEntity> GetById(int id);        
         Task<TEntity> GetByIdCompositeKey(object[] keyValues);
         Task<IEnumerable<TEntity>> GetAll();
         IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);
-        Task Update(TEntity obj);
-        Task Remove(TEntity obj);
-        Task RemoveRange(IEnumerable<TEntity> obj);
+        Task Update(TEntity entity);
+        Task Remove(TEntity entity);
+        Task RemoveRange(IEnumerable<TEntity> entity);
 
     }
 }

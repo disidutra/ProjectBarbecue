@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Entities;
-using Barbecue.ApplicationCore.Interfaces.Repositorys;
+using Barbecue.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -16,12 +16,17 @@ namespace Barbecue.WebAPI.Controllers
     public class EventController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEventRepository _context;
+        private readonly IEfBaseRepository<Event> _context;
+        private readonly IEventService _service;
         private const string LocalLog = "[WebAPI][EventController]";
-        public EventController(ILogger<EventController> logger, IEventRepository context)
+        public EventController(
+            ILogger<EventController> logger, 
+            IEfBaseRepository<Event> context,
+            IEventService service)
         {
             _logger = logger;
             _context = context;
+            _service = service;
         }
 
         [HttpGet("{id}")]
@@ -75,9 +80,25 @@ namespace Barbecue.WebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
-                throw ex;                
+                throw ex;
             }
         }
+
+        [HttpPost, Route("EventAndUsers")]
+        public async Task<ActionResult> PostEventAndUsers([FromBody]Event item)
+        {
+            try
+            {
+                await _service.AddEventAndUsers(item);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[PostEventAndUsers][Item: {JsonConvert.SerializeObject(item)}]");
+                throw ex;
+            }
+        }
+
 
         [HttpPut]
         public async Task<ActionResult> Put([FromBody]Event item)

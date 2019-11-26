@@ -16,9 +16,12 @@ namespace Barbecue.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly UserRepository _context;
+        private readonly IEfBaseRepository<User> _context;
         private const string LocalLog = "[WebAPI][UserController]";
-        public UserController(ILogger<UserController> logger, UserRepository context)
+        public UserController(
+            ILogger<UserController> logger,
+            IEfBaseRepository<User> context
+        )
         {
             _logger = logger;
             _context = context;
@@ -75,7 +78,7 @@ namespace Barbecue.WebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
-                throw ex;                
+                throw ex;
             }
         }
 
@@ -86,7 +89,7 @@ namespace Barbecue.WebAPI.Controllers
             {
                 var getItem = await _context.GetById(item.Id);
                 if (getItem != null)
-                {                    
+                {
                     await _context.Update(item);
                     return Ok();
                 }

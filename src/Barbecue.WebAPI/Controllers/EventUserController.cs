@@ -16,33 +16,16 @@ namespace Barbecue.WebAPI.Controllers
     public class EventUserController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly EventUserRepository _context;
+        private readonly IEfBaseRepository<EventUser> _context;
         private const string LocalLog = "[WebAPI][EventUserController]";
-        public EventUserController(ILogger<EventUserController> logger, EventUserRepository context)
+        public EventUserController(
+            ILogger<EventUserController> logger,
+            IEfBaseRepository<EventUser> context
+        )
         {
             _logger = logger;
             _context = context;
         }
-
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<EventUser>> Get(object obj)
-        // {
-        //     try
-        //     {
-        //         var result = await _context.GetByIdCompositeKey(obj);
-        //         if (result != null)
-        //         {
-        //             return result;
-        //         }
-        //         return NotFound();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogError(ex, $"{LocalLog}[Get]");
-        //         throw ex;
-        //     }
-
-        // }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EventUser>>> GetAll()
@@ -83,8 +66,8 @@ namespace Barbecue.WebAPI.Controllers
         public async Task<ActionResult> Put([FromBody]EventUser item)
         {
             try
-            {                
-                var keys = new object[]{ item.EventId, item.UserId };                
+            {
+                var keys = new object[] { item.EventId, item.UserId };
                 var getItem = await _context.GetByIdCompositeKey(keys);
                 if (getItem != null)
                 {

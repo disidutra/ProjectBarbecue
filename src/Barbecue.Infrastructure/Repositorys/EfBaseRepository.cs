@@ -17,16 +17,18 @@ namespace Barbecue.Infrastructure.Repositorys
             _base_context = baseContext;
         }
 
-        public async Task Add(TEntity entity)
+        public async Task<TEntity> Add(TEntity entity)
         {
-            await _base_context.Set<TEntity>().AddAsync(entity);
+            var result = await _base_context.Set<TEntity>().AddAsync(entity);
             await _base_context.SaveChangesAsync();
+            return entity;
         }
 
-        public async Task AddRange(IEnumerable<TEntity> entity)
+        public async Task<IEnumerable<TEntity>> AddRange(IEnumerable<TEntity> entity)
         {
             await _base_context.Set<TEntity>().AddRangeAsync(entity);
             await _base_context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<TEntity> GetById(int id)
