@@ -16,15 +16,15 @@ namespace Barbecue.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEfBaseRepository<User> _context;
+        private readonly IEfBaseRepository<User> _userRepository;
         private const string LocalLog = "[WebAPI][UserController]";
         public UserController(
             ILogger<UserController> logger,
-            IEfBaseRepository<User> context
+            IEfBaseRepository<User> userRepository
         )
         {
             _logger = logger;
-            _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpGet("{id}")]
@@ -32,7 +32,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _context.GetById(id);
+                var result = await _userRepository.GetById(id);
                 if (result != null)
                 {
                     return result;
@@ -52,7 +52,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _context.GetAll();
+                var result = await _userRepository.GetAll();
                 if (result.Any())
                 {
                     return result.ToList();
@@ -72,7 +72,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                await _context.Add(item);
+                await _userRepository.Add(item);
                 return Ok();
             }
             catch (Exception ex)
@@ -87,10 +87,10 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var getItem = await _context.GetById(item.Id);
+                var getItem = await _userRepository.GetById(item.Id);
                 if (getItem != null)
                 {
-                    await _context.Update(item);
+                    await _userRepository.Update(item);
                     return Ok();
                 }
                 return NotFound();
@@ -107,10 +107,10 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var item = await _context.GetById(id);
+                var item = await _userRepository.GetById(id);
                 if (item != null)
                 {
-                    await _context.Remove(item);
+                    await _userRepository.Remove(item);
                     return Ok();
                 }
 
@@ -122,6 +122,21 @@ namespace Barbecue.WebAPI.Controllers
                 throw ex;
             }
 
+        }
+
+        [HttpPost, Route("IsValid")]
+        public async Task<ActionResult> IsValid([FromBody]User item)
+        {
+            try
+            {
+                await _userRepository.Add(item);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                throw ex;
+            }
         }
     }
 }

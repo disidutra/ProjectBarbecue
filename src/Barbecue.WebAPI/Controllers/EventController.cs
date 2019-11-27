@@ -18,21 +18,18 @@ namespace Barbecue.WebAPI.Controllers
     public class EventController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEfBaseRepository<Event> _context;
-        private readonly IEfBaseRepository<EventUser> _contextEventUSer;
-        private readonly IEventService _service;
+        private readonly IEfBaseRepository<Event> _eventRepository;
+        private readonly IEfBaseRepository<EventUser> _eventUserRepository;        
         private const string LocalLog = "[WebAPI][EventController]";
         public EventController(
             ILogger<EventController> logger, 
-            IEfBaseRepository<Event> context,
-            IEventService service,
-            IEfBaseRepository<EventUser> contextEventUSer
+            IEfBaseRepository<Event> EventRepository,            
+            IEfBaseRepository<EventUser> eventUserRepository
             )
         {
             _logger = logger;
-            _context = context;
-            _service = service;
-            _contextEventUSer = contextEventUSer;
+            _eventRepository = EventRepository;            
+            _eventUserRepository = eventUserRepository;
         }
 
         [HttpGet("{id}")]
@@ -40,7 +37,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _context.GetById(id);
+                var result = await _eventRepository.GetById(id);
                 if (result != null)
                 {
                     return result;
@@ -60,7 +57,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _context.GetAll();
+                var result = await _eventRepository.GetAll();
                 if (result.Any())
                 {
                     return result.ToList();
@@ -80,7 +77,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                await _context.Add(item);
+                await _eventRepository.Add(item);
                 return Ok();
             }
             catch (Exception ex)
@@ -95,10 +92,10 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var getItem = await _context.GetById(item.Id);
+                var getItem = await _eventRepository.GetById(item.Id);
                 if (getItem != null)
                 {
-                    await _context.Update(item);
+                    await _eventRepository.Update(item);
                     return Ok();
                 }
                 return NotFound();
@@ -110,16 +107,16 @@ namespace Barbecue.WebAPI.Controllers
             }
         }
 
-        [HttpPut, Route("AndEventUSers")]
-        public async Task<ActionResult> PutEventAndEventUSers([FromBody]Event item)
+        [HttpPut, Route("AndEventUsers")]
+        public async Task<ActionResult> PutEventAndEventUsers([FromBody]Event item)
         {
             try
             {
-                var getItem = await _context.GetAll(x => x.Include(y => y.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
+                var getItem = await _eventRepository.GetAll(x => x.Include(y => y.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
                 if (getItem.Any())
                 {
-                    await _context.Update(item);
-                    await _contextEventUSer.UpdateManyToMany(getItem.First().EventUsers, item.EventUsers);
+                    await _eventRepository.Update(item);
+                    await _eventUserRepository.UpdateManyToMany(getItem.First().EventUsers, item.EventUsers);
 
                     return Ok();
                 }
@@ -137,10 +134,10 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var item = await _context.GetById(id);
+                var item = await _eventRepository.GetById(id);
                 if (item != null)
                 {
-                    await _context.Remove(item);
+                    await _eventRepository.Remove(item);
                     return Ok();
                 }
 

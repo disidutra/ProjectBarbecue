@@ -72,8 +72,7 @@ namespace Barbecue.Infrastructure.Repositorys
         public async Task Update(TEntity entity)
         {            
             _base_context.Entry(entity).State = EntityState.Modified;
-            await _base_context.SaveChangesAsync();
-            _base_context.Entry(entity).State = EntityState.Detached;
+            await _base_context.SaveChangesAsync();            
         }
 
         public async Task UpdateManyToMany(IEnumerable<TEntity> currentItems, IEnumerable<TEntity> newItems)

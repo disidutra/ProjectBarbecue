@@ -16,15 +16,15 @@ namespace Barbecue.WebAPI.Controllers
     public class EventUserController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IEfBaseRepository<EventUser> _context;
+        private readonly IEfBaseRepository<EventUser> _eventUserRepository;
         private const string LocalLog = "[WebAPI][EventUserController]";
         public EventUserController(
             ILogger<EventUserController> logger,
-            IEfBaseRepository<EventUser> context
+            IEfBaseRepository<EventUser> eventUserRepository
         )
         {
             _logger = logger;
-            _context = context;
+            _eventUserRepository = eventUserRepository;
         }
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _context.GetAll();
+                var result = await _eventUserRepository.GetAll();
                 if (result.Any())
                 {
                     return result.ToList();
@@ -52,7 +52,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _context.GetAllWhere(x => x.EventId == id);
+                var result = await _eventUserRepository.GetAllWhere(x => x.EventId == id);
                 if (result != null)
                 {
                     return result.ToList();
@@ -72,7 +72,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                await _context.Add(item);
+                await _eventUserRepository.Add(item);
                 return Ok();
             }
             catch (Exception ex)
@@ -88,10 +88,10 @@ namespace Barbecue.WebAPI.Controllers
             try
             {
                 var keys = new object[] { item.EventId, item.UserId };
-                var getItem = await _context.GetByIdCompositeKey(keys);
+                var getItem = await _eventUserRepository.GetByIdCompositeKey(keys);
                 if (getItem != null)
                 {
-                    await _context.Update(item);
+                    await _eventUserRepository.Update(item);
                     return Ok();
                 }
                 return NotFound();
@@ -108,10 +108,10 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var item = await _context.GetById(id);
+                var item = await _eventUserRepository.GetById(id);
                 if (item != null)
                 {
-                    await _context.Remove(item);
+                    await _eventUserRepository.Remove(item);
                     return Ok();
                 }
 
