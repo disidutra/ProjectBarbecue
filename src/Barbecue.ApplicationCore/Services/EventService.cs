@@ -19,33 +19,33 @@ namespace Barbecue.ApplicationCore.Services
             _eventRepository = eventRepository;
             _eventUserRepository = eventUSerRepository;
         }
-        public async Task AddEventAndUsers(int eventId, IEnumerable<EventUser> entity)
-        {
-            entity.ToList().ForEach(item => item.EventId = eventId);
-            await _eventUserRepository.AddRange(entity);
-        }
+        // public async Task AddEventAndUsers(int eventId, IEnumerable<EventUser> entity)
+        // {
+        //     entity.ToList().ForEach(item => item.EventId = eventId);
+        //     await _eventUserRepository.AddRange(entity);
+        // }
 
-        public async Task AddOrUpdateEventAndUsers(int eventId, IEnumerable<EventUser> entity)
-        {
-            var eventUsersAdd = entity.ToList();
-            var eventUsersRemove = new List<EventUser>();
-            var eventUsersUpdate = new List<EventUser>();
+        // public async Task AddOrUpdateEventAndUsers(int eventId, IEnumerable<EventUser> entity)
+        // {
+        //     var eventUsersAdd = entity.ToList();
+        //     var eventUsersRemove = new List<EventUser>();
+        //     var eventUsersUpdate = new List<EventUser>();
 
-            var eventUsers = await _eventUserRepository.GetAllWhere(x => x.EventId == eventId);                
+        //     var eventUsers = await _eventUserRepository.GetAllWhere(x => x.EventId == eventId);                
 
-            eventUsers.ToList().ForEach(item => {
-                var resultItem = eventUsersAdd.Where(x=> x.UserId == item.UserId).FirstOrDefault();
-                if (resultItem != null){
-                    eventUsersUpdate.Add(item);
-                    eventUsersAdd.Remove(resultItem);
-                } else {
-                    eventUsersRemove.Add(item);
-                }
-            });
+        //     eventUsers.ToList().ForEach(item => {
+        //         var resultItem = eventUsersAdd.Where(x=> x.UserId == item.UserId).FirstOrDefault();
+        //         if (resultItem != null){
+        //             eventUsersUpdate.Add(item);
+        //             eventUsersAdd.Remove(resultItem);
+        //         } else {
+        //             eventUsersRemove.Add(item);
+        //         }
+        //     });
 
-            // entity.ToList().ForEach(item => item.EventId = eventId);
-            // await _eventUserRepository.AddRange(entity);
+        //     // entity.ToList().ForEach(item => item.EventId = eventId);
+        //     // await _eventUserRepository.AddRange(entity);
 
-        }
+        // }
     }
 }

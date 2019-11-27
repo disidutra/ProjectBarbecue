@@ -37,7 +37,7 @@ namespace Barbecue.Infrastructure.Repositorys
             var result =  await _base_context.Set<TEntity>().FindAsync(id);
             _base_context.Entry(result).State = EntityState.Detached;
             return result;
-        }
+        }        
 
         public async Task<TEntity> GetByIdCompositeKey(object[] keyValues)
         {           
@@ -73,6 +73,14 @@ namespace Barbecue.Infrastructure.Repositorys
         {            
             _base_context.Entry(entity).State = EntityState.Modified;
             await _base_context.SaveChangesAsync();
+            _base_context.Entry(entity).State = EntityState.Detached;
+        }
+
+        public async Task UpdateManyToMany(IEnumerable<TEntity> currentItems, IEnumerable<TEntity> newItems)
+        {         
+            _base_context.Set<TEntity>().RemoveRange(currentItems);
+            await _base_context.Set<TEntity>().AddRangeAsync(newItems);
+            await _base_context.SaveChangesAsync();            
         }
 
         public async Task Remove(TEntity entity)

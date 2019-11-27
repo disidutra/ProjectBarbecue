@@ -16,6 +16,7 @@ namespace ApplicationCore.Interfaces.Repositorys
         Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);
         Task<IEnumerable<TEntity>> GetAllWhere(Expression<Func<TEntity, bool>> Predicate);
         Task Update(TEntity entity);
+        Task UpdateManyToMany(IEnumerable<TEntity> currentItems, IEnumerable<TEntity> newItems);
         Task Remove(TEntity entity);
         Task RemoveRange(IEnumerable<TEntity> entity);
 

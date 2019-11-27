@@ -22,7 +22,7 @@ namespace Barbecue.Infra.Data.EntityConfig
                 .IsRequired();
 
             builder.HasOne(c => c.Event)
-            .WithMany(p => p.EventUSers)
+            .WithMany(p => p.EventUsers)
             .HasForeignKey(x => x.EventId)
             .OnDelete(DeleteBehavior.Restrict);
 

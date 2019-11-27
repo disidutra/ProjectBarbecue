@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Entities;
+using Barbecue.ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -17,16 +19,20 @@ namespace Barbecue.WebAPI.Controllers
     {
         private readonly ILogger _logger;
         private readonly IEfBaseRepository<Event> _context;
+        private readonly IEfBaseRepository<EventUser> _contextEventUSer;
         private readonly IEventService _service;
         private const string LocalLog = "[WebAPI][EventController]";
         public EventController(
             ILogger<EventController> logger, 
             IEfBaseRepository<Event> context,
-            IEventService service)
+            IEventService service,
+            IEfBaseRepository<EventUser> contextEventUSer
+            )
         {
             _logger = logger;
             _context = context;
             _service = service;
+            _contextEventUSer = contextEventUSer;
         }
 
         [HttpGet("{id}")]
@@ -84,22 +90,6 @@ namespace Barbecue.WebAPI.Controllers
             }
         }
 
-        [HttpPost, Route("Users")]
-        public async Task<ActionResult> PostEventAndUsers(int id, [FromBody]IEnumerable<EventUser> item)
-        {
-            try
-            {
-                await _service.AddEventAndUsers(id, item);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"{LocalLog}[PostEventAndUsers][Item: {JsonConvert.SerializeObject(item)}]");
-                throw ex;
-            }
-        }
-
-
         [HttpPut]
         public async Task<ActionResult> Put([FromBody]Event item)
         {
@@ -109,6 +99,28 @@ namespace Barbecue.WebAPI.Controllers
                 if (getItem != null)
                 {
                     await _context.Update(item);
+                    return Ok();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                throw ex;
+            }
+        }
+
+        [HttpPut, Route("AndEventUSers")]
+        public async Task<ActionResult> PutEventAndEventUSers([FromBody]Event item)
+        {
+            try
+            {
+                var getItem = await _context.GetAll(x => x.Include(y => y.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
+                if (getItem.Any())
+                {
+                    await _context.Update(item);
+                    await _contextEventUSer.UpdateManyToMany(getItem.First().EventUsers, item.EventUsers);
+
                     return Ok();
                 }
                 return NotFound();

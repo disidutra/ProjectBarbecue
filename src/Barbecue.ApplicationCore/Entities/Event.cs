@@ -11,6 +11,6 @@ namespace Barbecue.ApplicationCore.Entities
         public string Comments { get; set; }
         public decimal EventValue { get; set; }
         public decimal DrinksValue { get; set; }
-        public virtual ICollection<EventUser> EventUSers { get; set; }
+        public virtual ICollection<EventUser> EventUsers { get; set; }
     }
 }

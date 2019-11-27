@@ -6,6 +6,6 @@ namespace Barbecue.ApplicationCore.Interfaces.Services
 {
     public interface IEventService
     {
-         Task AddEventAndUsers(int eventId, IEnumerable<EventUser> entity);
+        //  Task AddEventAndUsers(int eventId, IEnumerable<EventUser> entity);
     }
 }
