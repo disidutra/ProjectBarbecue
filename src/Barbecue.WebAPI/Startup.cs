@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Barbecue.ApplicationCore.Interfaces.Services;
 using Barbecue.ApplicationCore.Services;
-using Barbecue.ApplicationCore.Interfaces.Repositorys;
 
 namespace Barbecue.WebAPI
 {
@@ -27,9 +26,7 @@ namespace Barbecue.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IEfBaseRepository<>), typeof(EfBaseRepository<>));            
-            services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IEventRepository, EventRepository>();
-
+            services.AddScoped<IUserService, UserService>();
 
             services.AddDbContext<EfBaseContext>(options =>
             {

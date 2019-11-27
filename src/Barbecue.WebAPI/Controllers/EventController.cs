@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Entities;
-using Barbecue.ApplicationCore.Interfaces.Repositorys;
-using Barbecue.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

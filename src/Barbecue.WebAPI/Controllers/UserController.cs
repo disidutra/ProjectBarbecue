@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces.Repositorys;
 using Barbecue.ApplicationCore.Entities;
+using Barbecue.ApplicationCore.Interfaces.Services;
 using Barbecue.Infrastructure.Repositorys;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,14 +18,17 @@ namespace Barbecue.WebAPI.Controllers
     {
         private readonly ILogger _logger;
         private readonly IEfBaseRepository<User> _userRepository;
+        private readonly IUserService _userService;
         private const string LocalLog = "[WebAPI][UserController]";
         public UserController(
             ILogger<UserController> logger,
-            IEfBaseRepository<User> userRepository
+            IEfBaseRepository<User> userRepository,
+            IUserService userService
         )
         {
             _logger = logger;
             _userRepository = userRepository;
+            _userService = userService;
         }
 
         [HttpGet("{id}")]
@@ -129,8 +133,8 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                await _userRepository.Add(item);
-                return Ok();
+                var result = await _userService.IsValid(item);
+                return Ok(result);
             }
             catch (Exception ex)
             {
