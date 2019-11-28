@@ -10,7 +10,7 @@ namespace ApplicationCore.Interfaces.Repositorys
     {
         Task<TEntity> Add(TEntity entity);
         Task<IEnumerable<TEntity>> AddRange(IEnumerable<TEntity> entity);
-        Task<TEntity> GetById(int id);        
+        Task<TEntity> GetById(int id);                        
         Task<TEntity> GetByIdCompositeKey(object[] keyValues);
         Task<IEnumerable<TEntity>> GetAll();
         Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);

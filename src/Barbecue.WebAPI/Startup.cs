@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Barbecue.ApplicationCore.Interfaces.Services;
 using Barbecue.ApplicationCore.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Barbecue.WebAPI
 {
@@ -25,15 +26,15 @@ namespace Barbecue.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IEfBaseRepository<>), typeof(EfBaseRepository<>));            
+            services.AddScoped(typeof(IEfBaseRepository<>), typeof(EfBaseRepository<>));
             services.AddScoped<IUserService, UserService>();
 
             services.AddDbContext<EfBaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DBConnection"), b => b.MigrationsAssembly("Barbecue.Infrastructure"));
             });
-            
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSwaggerGen(c =>
             {

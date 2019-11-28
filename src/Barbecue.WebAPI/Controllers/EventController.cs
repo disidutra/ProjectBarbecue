@@ -17,16 +17,16 @@ namespace Barbecue.WebAPI.Controllers
     {
         private readonly ILogger _logger;
         private readonly IEfBaseRepository<Event> _eventRepository;
-        private readonly IEfBaseRepository<EventUser> _eventUserRepository;        
+        private readonly IEfBaseRepository<EventUser> _eventUserRepository;
         private const string LocalLog = "[WebAPI][EventController]";
         public EventController(
-            ILogger<EventController> logger, 
-            IEfBaseRepository<Event> EventRepository,            
+            ILogger<EventController> logger,
+            IEfBaseRepository<Event> EventRepository,
             IEfBaseRepository<EventUser> eventUserRepository
             )
         {
             _logger = logger;
-            _eventRepository = EventRepository;            
+            _eventRepository = EventRepository;
             _eventUserRepository = eventUserRepository;
         }
 
@@ -47,7 +47,29 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog}[Get]");
                 throw ex;
             }
+        }
 
+        [HttpGet("{id}/IncludeUsers")]
+        public async Task<ActionResult<Event>> GetIncludeUsers(int id)
+        {
+            try
+            {
+                var result = await _eventRepository.GetAll(e => 
+                    e.Include(e => e.EventUsers)
+                    .ThenInclude(eu => eu.User)
+                    .Where(e => e.Id == id)
+                );
+                if (result.Any())
+                {
+                    return result.FirstOrDefault();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[Get]");
+                throw ex;
+            }
         }
 
         [HttpGet]
@@ -56,6 +78,30 @@ namespace Barbecue.WebAPI.Controllers
             try
             {
                 var result = await _eventRepository.GetAll();
+                if (result.Any())
+                {
+                    return result.ToList();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[GetAll]");
+                throw ex;
+            }
+
+        }
+
+        [HttpGet, Route("IncludeUsers")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetAllIncludeUsers(DateTime afterDate)
+        {
+            try
+            {
+                var result = await _eventRepository.GetAll(e =>
+                    e.Include(e => e.EventUsers)
+                    .ThenInclude(eu => eu.User)
+                    .Where(e => e.Date >= afterDate)
+                );
                 if (result.Any())
                 {
                     return result.ToList();
@@ -110,7 +156,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var getItem = await _eventRepository.GetAll(x => x.Include(y => y.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
+                var getItem = await _eventRepository.GetAll(e => e.Include(e => e.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
                 if (getItem.Any())
                 {
                     await _eventRepository.Update(item);
