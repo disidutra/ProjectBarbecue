@@ -20,16 +20,6 @@ namespace Barbecue.Infra.Data.EntityConfig
 
             builder.Property(c => c.DrinksValue)
                 .IsRequired();
-
-            builder.HasOne(c => c.Event)
-            .WithMany(p => p.EventUsers)
-            .HasForeignKey(x => x.EventId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(c => c.User)
-            .WithMany(p => p.EventUsers)
-            .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

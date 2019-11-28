@@ -106,13 +106,13 @@ namespace Barbecue.Infrastructure.Migrations
                     b.HasOne("Barbecue.ApplicationCore.Entities.Event", "Event")
                         .WithMany("EventUsers")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Barbecue.ApplicationCore.Entities.User", "User")
                         .WithMany("EventUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Barbecue.Infrastructure.Migrations
 {
     [DbContext(typeof(EfBaseContext))]
-    [Migration("20191128044817_Initial")]
+    [Migration("20191128143532_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,13 +108,13 @@ namespace Barbecue.Infrastructure.Migrations
                     b.HasOne("Barbecue.ApplicationCore.Entities.Event", "Event")
                         .WithMany("EventUsers")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Barbecue.ApplicationCore.Entities.User", "User")
                         .WithMany("EventUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
