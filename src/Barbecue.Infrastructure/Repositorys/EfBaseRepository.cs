@@ -61,14 +61,7 @@ namespace Barbecue.Infrastructure.Repositorys
 
             return await query.ToListAsync();
         }
-
-        public async Task<IEnumerable<TEntity>> GetAllWhere(Expression<Func<TEntity, bool>> Predicate)
-        {
-            var query = await _base_context.Set<TEntity>().AsNoTracking()
-                .Where(Predicate).ToListAsync();
-            return query;
-        }
-
+        
         public async Task Update(TEntity entity)
         {            
             _base_context.Entry(entity).State = EntityState.Modified;

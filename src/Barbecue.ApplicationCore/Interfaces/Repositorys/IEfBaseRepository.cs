@@ -13,8 +13,7 @@ namespace ApplicationCore.Interfaces.Repositorys
         Task<TEntity> GetById(int id);                        
         Task<TEntity> GetByIdCompositeKey(object[] keyValues);
         Task<IEnumerable<TEntity>> GetAll();
-        Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);
-        Task<IEnumerable<TEntity>> GetAllWhere(Expression<Func<TEntity, bool>> Predicate);
+        Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);        
         Task Update(TEntity entity);
         Task UpdateManyToMany(IEnumerable<TEntity> currentItems, IEnumerable<TEntity> newItems);
         Task Remove(TEntity entity);

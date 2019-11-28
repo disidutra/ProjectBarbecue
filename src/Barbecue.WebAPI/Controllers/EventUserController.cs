@@ -52,7 +52,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _eventUserRepository.GetAllWhere(x => x.EventId == id);
+                var result = await _eventUserRepository.GetAll(f => f.Where(x => x.EventId == id));
                 if (result != null)
                 {
                     return result.ToList();

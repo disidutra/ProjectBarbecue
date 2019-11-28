@@ -15,7 +15,7 @@ namespace Barbecue.ApplicationCore.Services
         }
         public async Task<bool> IsValid(User user){
 
-            var result = await _userRepositoy.GetAllWhere(x => x.Email.Equals(user.Email) || x.Password.Equals(user.Password));
+            var result = await _userRepositoy.GetAll(f => f.Where(x => x.Email.Equals(user.Email) && x.Password.Equals(user.Password)));
 
             return result.Any();
         }
