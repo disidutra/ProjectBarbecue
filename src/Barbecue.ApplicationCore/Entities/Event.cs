@@ -12,5 +12,8 @@ namespace Barbecue.ApplicationCore.Entities
         public decimal EventValue { get; set; }
         public decimal DrinksValue { get; set; }
         public virtual ICollection<EventUser> EventUsers { get; set; }
+        public int TotalUsers { get; set; }
+        public decimal TotalValue { get; set; } 
+        public decimal TotalPaid { get; set; }
     }
 }

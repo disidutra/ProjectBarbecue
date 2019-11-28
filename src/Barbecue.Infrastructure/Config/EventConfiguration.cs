@@ -31,6 +31,10 @@ namespace Barbecue.Infra.Data.EntityConfig
             builder.Property(c => c.Comments)
                 .IsRequired()
                 .HasMaxLength(500);
+
+            builder.Ignore(c => c.TotalUsers);
+            builder.Ignore(c => c.TotalValue);
+            builder.Ignore(c => c.TotalPaid);
         }
     }
 }
