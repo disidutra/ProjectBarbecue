@@ -49,7 +49,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog}[Get]");
                 throw ex;
             }
-
         }
 
         [HttpGet("{id}/IncludeEvents")]
@@ -92,7 +91,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog}[GetAll]");
                 throw ex;
             }
-
         }
 
         [HttpPost]
@@ -149,7 +147,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog} [Delete] [Id: {id}]");
                 throw ex;
             }
-
         }
 
         [HttpPost, Route("IsValid")]

@@ -44,7 +44,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog}[GetAll]");
                 throw ex;
             }
-
         }
 
         [HttpGet("EventId/{id}")]
@@ -64,7 +63,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog}[GetAllByEventId]");
                 throw ex;
             }
-
         }
 
         [HttpPost]
@@ -123,7 +121,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog} [Delete] [EventId: {eventId}]");
                 throw ex;
             }
-
         }
     }
 }
