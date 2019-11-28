@@ -54,7 +54,7 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var result = await _eventRepository.GetAll(e => 
+                var result = await _eventRepository.GetAll(e =>
                     e.Include(e => e.EventUsers)
                     .ThenInclude(eu => eu.User)
                     .Where(e => e.Id == id)
@@ -73,11 +73,11 @@ namespace Barbecue.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Event>>> GetAll(DateTime afterDate)
         {
             try
             {
-                var result = await _eventRepository.GetAll();
+                var result = await _eventRepository.GetAll(f => f.Where(e => e.Date >= afterDate));
                 if (result.Any())
                 {
                     return result.ToList();
@@ -89,7 +89,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog}[GetAll]");
                 throw ex;
             }
-
         }
 
         [HttpGet, Route("IncludeUsers")]
@@ -156,13 +155,17 @@ namespace Barbecue.WebAPI.Controllers
         {
             try
             {
-                var getItem = await _eventRepository.GetAll(e => e.Include(e => e.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
+                var getItem = await _eventRepository.GetAll(e =>
+                    e.Include(e => e.EventUsers)
+                    .ThenInclude(y => y.User)
+                    .Where(x => x.Id == item.Id)
+                );
                 if (getItem.Any())
-                {                    
+                {
                     await _eventUserRepository.UpdateManyToMany(
-                        getItem.FirstOrDefault().EventUsers.ToList(),                        
+                        getItem.FirstOrDefault().EventUsers.ToList(),
                         item.EventUsers
-                    );                 
+                    );
 
                     return Ok();
                 }
@@ -194,7 +197,6 @@ namespace Barbecue.WebAPI.Controllers
                 _logger.LogError(ex, $"{LocalLog} [Delete] [Id: {id}]");
                 throw ex;
             }
-
         }
     }
 }
