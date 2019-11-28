@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Barbecue.Infrastructure.Migrations
 {
     [DbContext(typeof(EfBaseContext))]
-    [Migration("20191126184234_EditConfig")]
-    partial class EditConfig
+    [Migration("20191128044817_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,7 +73,7 @@ namespace Barbecue.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EventUser");
+                    b.ToTable("EventUsers");
                 });
 
             modelBuilder.Entity("Barbecue.ApplicationCore.Entities.User", b =>
@@ -106,13 +106,13 @@ namespace Barbecue.Infrastructure.Migrations
             modelBuilder.Entity("Barbecue.ApplicationCore.Entities.EventUser", b =>
                 {
                     b.HasOne("Barbecue.ApplicationCore.Entities.Event", "Event")
-                        .WithMany("EventUSers")
+                        .WithMany("EventUsers")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Barbecue.ApplicationCore.Entities.User", "User")
-                        .WithMany("EventUSers")
+                        .WithMany("EventUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

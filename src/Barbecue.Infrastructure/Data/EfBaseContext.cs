@@ -11,6 +11,7 @@ namespace Barbecue.Infrastructure.Data
 
         public DbSet<Event> Events { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<EventUser> EventUsers { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -7,6 +7,7 @@ using Barbecue.ApplicationCore.Entities;
 using Barbecue.ApplicationCore.Interfaces.Services;
 using Barbecue.Infrastructure.Repositorys;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -49,6 +50,29 @@ namespace Barbecue.WebAPI.Controllers
                 throw ex;
             }
 
+        }
+
+        [HttpGet("{id}/IncludeEvents")]
+        public async Task<ActionResult<User>> GetIncludeEvents(int id)
+        {
+            try
+            {
+                var result = await _userRepository.GetAll(e => 
+                    e.Include(u => u.EventUsers)
+                    .ThenInclude(e => e.Event)
+                    .Where(u => u.Id == id)
+                );
+                if (result.Any())
+                {
+                    return result.FirstOrDefault();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{LocalLog}[GetIncludeEvents]");
+                throw ex;
+            }
         }
 
         [HttpGet]
@@ -101,7 +125,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                _logger.LogError(ex, $"{LocalLog}[Put][Item: {JsonConvert.SerializeObject(item)}]");
                 throw ex;
             }
         }

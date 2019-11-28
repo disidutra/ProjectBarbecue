@@ -14,10 +14,9 @@ namespace ApplicationCore.Interfaces.Repositorys
         Task<TEntity> GetByIdCompositeKey(object[] keyValues);
         Task<IEnumerable<TEntity>> GetAll();
         Task<IEnumerable<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpressions = null);        
-        Task Update(TEntity entity);
-        Task UpdateManyToMany(IEnumerable<TEntity> currentItems, IEnumerable<TEntity> newItems);
+        Task Update(TEntity entity);        
+        Task UpdateManyToMany(IEnumerable<TEntity> entityOld, IEnumerable<TEntity> entityNew);
         Task Remove(TEntity entity);
         Task RemoveRange(IEnumerable<TEntity> entity);
-
     }
 }

@@ -67,7 +67,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[Get]");
+                _logger.LogError(ex, $"{LocalLog}[GetIncludeUsers]");
                 throw ex;
             }
         }
@@ -110,7 +110,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[GetAll]");
+                _logger.LogError(ex, $"{LocalLog}[GetAllIncludeUsers]");
                 throw ex;
             }
 
@@ -146,21 +146,23 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                _logger.LogError(ex, $"{LocalLog}[Put][Item: {JsonConvert.SerializeObject(item)}]");
                 throw ex;
             }
         }
 
-        [HttpPut, Route("AndEventUsers")]
-        public async Task<ActionResult> PutEventAndEventUsers([FromBody]Event item)
+        [HttpPut, Route("EventUsers")]
+        public async Task<ActionResult> PutEventUsers([FromBody]Event item)
         {
             try
             {
                 var getItem = await _eventRepository.GetAll(e => e.Include(e => e.EventUsers).ThenInclude(y => y.User).Where(x => x.Id == item.Id));
                 if (getItem.Any())
-                {
-                    await _eventRepository.Update(item);
-                    await _eventUserRepository.UpdateManyToMany(getItem.First().EventUsers, item.EventUsers);
+                {                    
+                    await _eventUserRepository.UpdateManyToMany(
+                        getItem.FirstOrDefault().EventUsers.ToList(),                        
+                        item.EventUsers
+                    );                 
 
                     return Ok();
                 }
@@ -168,7 +170,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                _logger.LogError(ex, $"{LocalLog}[PutEventUsers][Item: {JsonConvert.SerializeObject(item)}]");
                 throw ex;
             }
         }

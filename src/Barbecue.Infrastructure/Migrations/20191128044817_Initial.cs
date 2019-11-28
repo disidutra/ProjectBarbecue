@@ -40,66 +40,42 @@ namespace Barbecue.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventUser",
+                name: "EventUsers",
                 columns: table => new
                 {
                     EventId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     EventValue = table.Column<bool>(nullable: false),
                     DrinksValue = table.Column<bool>(nullable: false),
-                    ValuePaid = table.Column<decimal>(nullable: false),
-                    EventId1 = table.Column<int>(nullable: true),
-                    UserId1 = table.Column<int>(nullable: true)
+                    ValuePaid = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventUser", x => new { x.EventId, x.UserId });
+                    table.PrimaryKey("PK_EventUsers", x => new { x.EventId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_EventUser_Events_EventId",
+                        name: "FK_EventUsers_Events_EventId",
                         column: x => x.EventId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventUser_Events_EventId1",
-                        column: x => x.EventId1,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EventUser_Users_UserId",
+                        name: "FK_EventUsers_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventUser_Users_UserId1",
-                        column: x => x.UserId1,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventUser_EventId1",
-                table: "EventUser",
-                column: "EventId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventUser_UserId",
-                table: "EventUser",
+                name: "IX_EventUsers_UserId",
+                table: "EventUsers",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventUser_UserId1",
-                table: "EventUser",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EventUser");
+                name: "EventUsers");
 
             migrationBuilder.DropTable(
                 name: "Events");

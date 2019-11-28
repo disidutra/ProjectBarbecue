@@ -33,15 +33,15 @@ namespace Barbecue.Infrastructure.Repositorys
         }
 
         public async Task<TEntity> GetById(int id)
-        {           
-            var result =  await _base_context.Set<TEntity>().FindAsync(id);
+        {
+            var result = await _base_context.Set<TEntity>().FindAsync(id);
             _base_context.Entry(result).State = EntityState.Detached;
             return result;
-        }        
+        }
 
         public async Task<TEntity> GetByIdCompositeKey(object[] keyValues)
-        {           
-            var result = await  _base_context.Set<TEntity>().FindAsync(keyValues);
+        {
+            var result = await _base_context.Set<TEntity>().FindAsync(keyValues);
             _base_context.Entry(result).State = EntityState.Detached;
             return result;
         }
@@ -61,18 +61,18 @@ namespace Barbecue.Infrastructure.Repositorys
 
             return await query.ToListAsync();
         }
-        
-        public async Task Update(TEntity entity)
-        {            
-            _base_context.Entry(entity).State = EntityState.Modified;
-            await _base_context.SaveChangesAsync();            
-        }
 
-        public async Task UpdateManyToMany(IEnumerable<TEntity> currentItems, IEnumerable<TEntity> newItems)
-        {         
-            _base_context.Set<TEntity>().RemoveRange(currentItems);
-            await _base_context.Set<TEntity>().AddRangeAsync(newItems);
-            await _base_context.SaveChangesAsync();            
+        public async Task Update(TEntity entity)
+        {
+            _base_context.Entry(entity).State = EntityState.Modified;
+            await _base_context.SaveChangesAsync();
+        }        
+
+        public async Task UpdateManyToMany(IEnumerable<TEntity> entityOld, IEnumerable<TEntity> entityNew)
+        {
+            _base_context.Set<TEntity>().RemoveRange(entityOld);
+            await _base_context.Set<TEntity>().AddRangeAsync(entityNew);
+            await _base_context.SaveChangesAsync();
         }
 
         public async Task Remove(TEntity entity)
@@ -85,6 +85,6 @@ namespace Barbecue.Infrastructure.Repositorys
         {
             _base_context.Set<TEntity>().RemoveRange(entity);
             await _base_context.SaveChangesAsync();
-        }
+        }        
     }
 }

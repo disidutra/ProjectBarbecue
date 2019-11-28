@@ -9,6 +9,6 @@ namespace Barbecue.ApplicationCore.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public virtual ICollection<EventUser> EventUSers { get; set; }
+        public virtual ICollection<EventUser> EventUsers { get; set; }
     }
 }

@@ -61,7 +61,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[Get]");
+                _logger.LogError(ex, $"{LocalLog}[GetAllByEventId]");
                 throw ex;
             }
 
@@ -86,10 +86,11 @@ namespace Barbecue.WebAPI.Controllers
         public async Task<ActionResult> Put([FromBody]EventUser item)
         {
             try
-            {
-                var keys = new object[] { item.EventId, item.UserId };
-                var getItem = await _eventUserRepository.GetByIdCompositeKey(keys);
-                if (getItem != null)
+            {                
+                var result = await _eventUserRepository.GetAll(
+                    f => f.Where(x=> x.EventId == item.EventId && x.UserId == item.UserId)
+                );
+                if (result.Any())
                 {
                     await _eventUserRepository.Update(item);
                     return Ok();
@@ -98,20 +99,20 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog}[Post][Item: {JsonConvert.SerializeObject(item)}]");
+                _logger.LogError(ex, $"{LocalLog}[Put][Item: {JsonConvert.SerializeObject(item)}]");
                 throw ex;
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<EventUser>> Delete(int id)
+        [HttpDelete("Event/{eventId}")]
+        public async Task<ActionResult<EventUser>> Delete(int eventId)
         {
             try
             {
-                var item = await _eventUserRepository.GetById(id);
-                if (item != null)
+                var result = await _eventUserRepository.GetAll(f => f.Where(x=> x.EventId == eventId));
+                if (result.Any())
                 {
-                    await _eventUserRepository.Remove(item);
+                    await _eventUserRepository.RemoveRange(result);
                     return Ok();
                 }
 
@@ -119,7 +120,7 @@ namespace Barbecue.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{LocalLog} [Delete] [Id: {id}]");
+                _logger.LogError(ex, $"{LocalLog} [Delete] [EventId: {eventId}]");
                 throw ex;
             }
 

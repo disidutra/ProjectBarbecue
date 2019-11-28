@@ -27,7 +27,7 @@ namespace Barbecue.Infra.Data.EntityConfig
             .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(c => c.User)
-            .WithMany(p => p.EventUSers)
+            .WithMany(p => p.EventUsers)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);
         }
