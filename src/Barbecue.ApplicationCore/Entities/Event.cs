@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Barbecue.ApplicationCore.Entities
 {
@@ -12,8 +13,28 @@ namespace Barbecue.ApplicationCore.Entities
         public decimal EventValue { get; set; }
         public decimal DrinksValue { get; set; }
         public virtual ICollection<EventUser> EventUsers { get; set; }
-        public int TotalUsers { get; set; }
-        public decimal TotalValue { get; set; } 
-        public decimal TotalPaid { get; set; }
+        public int TotalUsers
+        {
+            get
+            {
+                return EventUsers != null ? EventUsers.Count() : 0;
+            }
+        }
+        public decimal TotalValue
+        {
+            get
+            {
+                return EventUsers != null ? (EventValue * EventUsers.Sum(x => x.EventValue ? 1 : 0)
+                                            + DrinksValue * EventUsers.Sum(x => x.DrinksValue ? 1 : 0))
+                                        : 0;
+            }
+        }
+        public decimal TotalPaid
+        {
+            get
+            {
+                return EventUsers != null ? EventUsers.Sum(x => x.ValuePaid) : 0;
+            }
+        }
     }
 }
