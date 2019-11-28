@@ -2,7 +2,7 @@
 Projeto de uma Web API com o intuito de gerenciar eventos de churrasco. Utilizando .Net Core
 
 * Swagger
-<img src="./Swagger.png" />
+<img src="./swagger.png" />
 
 Para rodar o projeto é necessário:
 -----------
