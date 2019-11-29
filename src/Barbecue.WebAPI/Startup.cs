@@ -1,6 +1,6 @@
-using ApplicationCore.Interfaces.Repositorys;
+using ApplicationCore.Interfaces.Repositories;
 using Barbecue.Infrastructure.Data;
-using Barbecue.Infrastructure.Repositorys;
+using Barbecue.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

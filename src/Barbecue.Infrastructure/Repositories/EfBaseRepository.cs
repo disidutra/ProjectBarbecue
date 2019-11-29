@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ApplicationCore.Interfaces.Repositorys;
+using ApplicationCore.Interfaces.Repositories;
 using Barbecue.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Barbecue.Infrastructure.Repositorys
+namespace Barbecue.Infrastructure.Repositories
 {
     public class EfBaseRepository<TEntity> : IEfBaseRepository<TEntity> where TEntity : class
     {

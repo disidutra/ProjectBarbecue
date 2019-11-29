@@ -3,8 +3,7 @@ using System;
 namespace Barbecue.ApplicationCore.Entities
 {
     public class EventUser
-    {
-        //public int Id { get; set; }
+    {        
         public bool EventValue { get; set; }
         public bool DrinksValue { get; set; }
         public decimal ValuePaid { get; set; }

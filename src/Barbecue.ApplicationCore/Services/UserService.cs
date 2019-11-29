@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using ApplicationCore.Interfaces.Repositorys;
+using ApplicationCore.Interfaces.Repositories;
 using Barbecue.ApplicationCore.Entities;
 using Barbecue.ApplicationCore.Interfaces.Services;
 
